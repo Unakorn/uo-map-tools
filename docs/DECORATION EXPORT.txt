@@ -1,0 +1,5 @@
+0.65: Decoration exports and rock exclusion
+Save map images and Download PNGs now include Terrain.png, Heightmap.png and Decorations.png in a fresh folder. Decorations.png uses exact palette RGB, opaque black for empty cells, original map dimensions. All 255 preset colors verified through PNG decoding. Editable projects still preserve decoration IDs.
+Deco patch and Deco whole map never generate on Rock (material 18). Sand/water remain excluded. Existing markers are not erased; undo old generation before regenerating.
+The map builder does not yet read Decorations.png or emit these decoration statics. Placement-plan JSON remains available separately. PNG is lossless RGB with at most 256 colors, not a claim of indexed PNG encoding.
+Save your project in the old open editor before opening it in this release. Existing editor sessions are not reloaded.

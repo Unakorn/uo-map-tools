@@ -1,0 +1,7 @@
+HOUSING TERRACES
+Select swamp or snow with Wand (Contagious off selects that color across the map), then Filters > Altitude: Housing terraces.
+Min / Max pad size controls the square interiors in map tiles. Start with 12 / 24. Seed changes the sizes and staggered layout. Apply covers all selected, set height pixels, with no site suitability scan, plot count, decoration exclusion or slope limit. With no explicit selection it affects the entire altitude map, including water, so select the intended terrain first.
+Each pad gets its rounded average original Z. The squares fill staggered bands without gaps; different bands have different seeded sizes. Pads do not overwrite each other. Complete pads include the extra height vertices needed for their flat interiors. Joins between pads of differing heights can slope; partial pads at selection edges/holes or map edges may be too small for houses. This is dense terracing, not a guarantee that every location passes the server's house-placement rules.
+Terrain colors and decoration markers stay exact, even with Linked painting on. Unselected pixels and unset heights stay exact. Changing terrain height underneath existing decorations can change their rebuilt Z; no decorations are regenerated.
+One Undo restores the operation. Record Filter supports this operation and seed variation. Apply this late in altitude preparation; later smoothing or sculpting can change the flat pads.
+Existing Flat house sites remains available for sparse, screened, blended sites.

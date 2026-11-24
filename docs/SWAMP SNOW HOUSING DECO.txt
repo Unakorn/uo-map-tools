@@ -1,0 +1,7 @@
+SWAMP / SNOW — PROTECT HOUSING (0.80)
+Run this finishing pass after terracing and normal decoration generation.
+Filters > Deco: swamp / snow — protect housing
+Small plants now grow across both flat pads and slopes. Plants % controls their coverage (6% default; try 15–25% for more vegetation). Existing plants are preserved. Trees and rocks remain excluded from exact flat cells plus one tile clearance; existing tree/rock presets1..53 there are cleared. Walls remain untouched. Terrain and heights stay unchanged; one Undo restores the pass.
+Swamp: ferns, mushrooms, bulrushes, rushes, cattails. Snow: snowdrops and snowdrop patches. Slopes can additionally receive the prior swamp/snow tree and rock sets.
+All selected plant artwork was checked against the installed tiledata and ServUO HousePlacement.cs: no Impassable flag and no non-Background Surface blocker. This verifies the static-object obstruction conditions, not every house's complete placement rules or live gameplay. Source audit: source/map-paint/plants080-audit.json.
+Selection restricts the pass; no explicit selection covers eligible swamp/snow across the map. Existing paving and enclosed building plots remain excluded. Run after normal tree repair. Export to test the result in-game.

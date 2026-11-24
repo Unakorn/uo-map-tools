@@ -1,0 +1,60 @@
+
+#chrome-editor { --chrome:linear-gradient(112deg,#536071 0%,#e6effb 12%,#fff 21%,#a1b0c4 35%,#f7fbff 45%,#64748b 47%,#c4d2e3 65%,#f9fcff 80%,#8293ab 100%); --button:linear-gradient(#fff 0%,#e3ebf6 41%,#8e9db3 47%,#b8c8dc 66%,#f5f9ff 100%); color-scheme:dark; font:12px/1.4 Tahoma,"Segoe UI",sans-serif; color:#eef5ff; background:var(--chrome); padding:4px; border:1px solid #e6f0ff; border-radius:8px; box-shadow:inset 0 0 0 1px #455268; overflow:hidden; }
+#chrome-editor * { box-sizing:border-box; }
+#chrome-editor [hidden] { display:none!important; }
+#chrome-editor .ce-titlebar { display:flex; align-items:center; flex-wrap:wrap; gap:12px; min-height:52px; padding:8px 100px 8px 14px; color:#121e31; background:var(--chrome); text-shadow:0 1px #fff; border:1px solid #ecf4ff; border-bottom-color:#53657d; border-radius:4px 4px 0 0; }
+#chrome-editor .ce-title { letter-spacing:2px; font-weight:700; }
+#chrome-editor #ce-document-title { min-width:0; overflow-wrap:anywhere; }
+#chrome-editor .ce-preview-tag { font-size:11px; letter-spacing:1px; margin-left:auto; }
+#chrome-editor .ce-menu { display:flex; gap:5px; align-items:center; flex-wrap:wrap; padding:8px; border-bottom:2px solid #40516a; background:linear-gradient(#cbd8e9,#f7fbff 48%,#99acc6 52%,#dae6f8); }
+#chrome-editor .ce-button { font:inherit; font-weight:500; color:#0f1c2f; background:var(--button); text-shadow:0 1px #fff; border:1px solid #283e5a; border-top-color:#fff; border-left-color:#edf5ff; border-radius:3px; box-shadow:inset 0 0 0 1px #c1d0e5,0 1px 0 #334660; padding:7px 10px; min-height:32px; }
+#chrome-editor .ce-button:active,#chrome-editor .ce-button[aria-pressed=true] { background:linear-gradient(#34465f,#a3bad8 45%,#647e9e 49%,#d0e4ff); box-shadow:inset 1px 2px 4px #1b2b43; border-color:#21374f; }
+#chrome-editor .ce-button:disabled { opacity:.48; }
+#chrome-editor .ce-menu-divider { width:1px; height:20px; background:#6b7d96; box-shadow:1px 0 #fff; margin:0 3px; }
+#chrome-editor .ce-main { display:grid; grid-template-columns:82px minmax(0,1fr) 224px; gap:4px; background:var(--chrome); padding:4px 0; }
+#chrome-editor .ce-tools { display:flex; flex-direction:column; gap:7px; padding:8px 6px; background:linear-gradient(90deg,#728198,#f5f9ff 25%,#b7c7dd 56%,#eef6ff 82%,#72849f); border:1px solid #d4e4fa; }
+#chrome-editor .ce-tool { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; padding:5px 3px; min-height:84px; font-size:11px; text-align:center; }
+#chrome-editor .ce-tool img { object-fit:contain; width:42px; height:42px; }
+#chrome-editor .ce-tool i,#chrome-editor .ce-tool svg { width:23px; height:23px; min-height:23px; font-style:normal; }
+#chrome-editor .ce-tool i[data-lucide="wand-sparkles"]:empty::before { content:"W"; font-size:20px; font-weight:700; }
+#chrome-editor .ce-tool i[data-lucide="eraser"]:empty::before { content:"E"; font-size:20px; font-weight:700; }
+#chrome-editor kbd { font:11px Tahoma,sans-serif; max-width:100%; overflow-wrap:anywhere; opacity:.85; }
+#chrome-editor .ce-pixel-mark { display:grid; place-items:center; min-height:23px; font-weight:700; font-size:14px; }
+#chrome-editor .ce-workspace { min-width:0; display:flex; flex-direction:column; background:#aebdd2; border:1px solid #e3efff; }
+#chrome-editor .ce-document-tab { display:flex; gap:10px; justify-content:space-between; padding:8px 10px; background:linear-gradient(#eff6ff,#adbed7); color:#192941; text-shadow:0 1px #fff; border-bottom:2px solid #445977; overflow-wrap:anywhere; }
+#chrome-editor #ce-tab-name { min-width:0; }
+#chrome-editor #ce-dimensions { flex-shrink:0; }
+#chrome-editor .ce-pasteboard { background:#ff0000; display:flex; justify-content:center; align-items:center; padding:28px; min-height:398px; flex:1; overflow:hidden; }
+#chrome-editor #ce-surface { display:block; position:relative; width:100%; max-width:512px; aspect-ratio:4/3; flex-shrink:1; padding:0; margin:0; border:1px solid #e6e6e6; border-radius:0; overflow:hidden; cursor:crosshair; touch-action:none; background-color:#000; background-image:linear-gradient(to right,#a0a0a0 1px,transparent 1px),linear-gradient(to bottom,#a0a0a0 1px,transparent 1px); background-size:6.25% 8.333333%; box-shadow:0 1px 5px #0009; }
+#chrome-editor #ce-canvas { display:block; width:100%; height:100%; image-rendering:pixelated; pointer-events:none; }
+#chrome-editor #ce-overlay { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+#chrome-editor .ce-canvas-footer { display:flex; justify-content:space-between; gap:6px 14px; flex-wrap:wrap; font-size:11px; color:#142338; padding:6px 9px; background:linear-gradient(#edf5ff,#aebfd7); }
+#chrome-editor .ce-selection-bar { display:flex; gap:6px; flex-wrap:wrap; padding:8px; background:var(--chrome); border-top:1px solid #f0f7ff; }
+#chrome-editor .ce-inspector { min-width:0; background:linear-gradient(120deg,#c3d2e8,#7f93b0); border:1px solid #e4f0ff; color:#14243b; text-shadow:0 1px #e5effe; }
+#chrome-editor .ce-panel-title { font-weight:700; font-size:11px; letter-spacing:1px; padding:8px 10px; background:var(--chrome); border-bottom:1px solid #667f9f; color:#11213a; text-shadow:0 1px #fff; }
+#chrome-editor .ce-panel-body { display:grid; gap:12px; padding:12px; }
+#chrome-editor .ce-settings-group { display:grid; gap:12px; }
+#chrome-editor .ce-field { display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px; align-items:center; min-width:0; }
+#chrome-editor .ce-field output { font-variant-numeric:tabular-nums; font-weight:700; }
+#chrome-editor input[type=range] { width:100%; accent-color:#153d71; margin:2px 0; }
+#chrome-editor input[type=number],#chrome-editor select { width:100%; min-width:0; background:#132136; color:#f2f7ff; font:inherit; border:1px solid #7086a2; border-radius:3px; padding:7px 8px; box-shadow:inset 1px 2px 3px #071020; }
+#chrome-editor .ce-check { display:flex; align-items:center; gap:6px; }
+#chrome-editor .ce-check input { accent-color:#163f73; margin:0; }
+#chrome-editor .ce-small { font-size:11px; line-height:1.5; }
+#chrome-editor .ce-palette-panel,#chrome-editor .ce-boundary-panel { border-top:2px solid #6e85a5; }
+#chrome-editor .ce-palette { display:grid; grid-template-columns:repeat(6,1fr); gap:4px; padding:10px; }
+#chrome-editor .ce-swatch { min-width:0; width:100%; aspect-ratio:1; border:1px solid #314963; border-radius:2px; box-shadow:inset 0 1px 0 #ffffff70; }
+#chrome-editor .ce-statusbar { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; padding:9px 11px; color:#15253c; background:var(--chrome); text-shadow:0 1px #fff; font-size:11px; border:1px solid #e4effe; border-top-color:#7288a6; }
+#chrome-editor #ce-status { flex:1; min-width:180px; }
+#chrome-editor #ce-audit { font-variant-numeric:tabular-nums; }
+#chrome-editor dialog { width:min(440px,calc(100% - 24px)); max-width:100%; padding:4px; border:2px solid #e7f2ff; border-radius:7px; background:var(--chrome); color:#eef5ff; box-shadow:0 12px 60px #000b; }
+#chrome-editor dialog::backdrop { background:#0008; }
+#chrome-editor .ce-dialog-body { display:grid; gap:14px; padding:18px; background:linear-gradient(120deg,#344760,#142238); }
+#chrome-editor .ce-dialog-body p { margin:0; }
+#chrome-editor .ce-dialog-buttons { display:flex; gap:8px; flex-wrap:wrap; }
+#chrome-editor #ce-shortcut-chord { display:block; padding:15px; border:1px solid #9bb3d1; background:#081426; color:#fff; text-align:center; font-size:24px; overflow-wrap:anywhere; }
+#chrome-editor .ce-error { color:#ffd0b0; font-size:12px; }
+#chrome-editor .ce-error:empty { display:none; }
+@media(max-width:760px) { #chrome-editor .ce-main { grid-template-columns:68px minmax(0,1fr); } #chrome-editor .ce-inspector { grid-column:1/-1; display:grid; grid-template-columns:1fr 1fr; align-items:start; } #chrome-editor #ce-tool-title { grid-column:1/-1; } #chrome-editor .ce-inspector>.ce-panel-body { grid-row:2/4; } #chrome-editor .ce-boundary-panel { border-top-width:1px; } #chrome-editor .ce-pasteboard { padding:24px; min-height:310px; } #chrome-editor .ce-palette { grid-template-columns:repeat(6,1fr); } }
+@media(max-width:480px) { #chrome-editor .ce-main { grid-template-columns:1fr; } #chrome-editor .ce-tools { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); padding:6px; gap:4px; } #chrome-editor .ce-tool { min-height:74px; font-size:10px; padding:5px 2px; } #chrome-editor .ce-tool img { width:32px; height:32px; } #chrome-editor .ce-pasteboard { min-height:245px; padding:20px; } #chrome-editor .ce-inspector { grid-template-columns:1fr; } #chrome-editor .ce-inspector>.ce-panel-body { grid-row:auto; } #chrome-editor .ce-palette { grid-template-columns:repeat(6,1fr); } #chrome-editor .ce-titlebar { padding-left:9px; gap:5px; } #chrome-editor .ce-preview-tag { display:none; } #chrome-editor .ce-document-tab { flex-wrap:wrap; } #chrome-editor input[type=number],#chrome-editor select { font-size:16px; } }
+@media(pointer:coarse) { #chrome-editor .ce-button { min-height:44px; } #chrome-editor input[type=range] { min-height:34px; } #chrome-editor .ce-check { min-height:44px; } }

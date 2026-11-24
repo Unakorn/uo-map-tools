@@ -1,0 +1,8 @@
+CITY SITES — 0.71
+City plots — one city / whole map now level sites and place filled paving together.
+Flat border defaults to 2 pixels; Blend width defaults to 3 pixels.
+Max height range defaults to 64; lower it to favor gentler terrain.
+Each foundation uses the median original plot height, including exact flat outer tile corners.
+Dry terrain, selection (one-city mode), existing scenery and previous plots are protected.
+The entire operation is one Undo. Run this before generating decoration/walls.
+Later altitude edits can alter foundations; use City plots: level foundations if needed.

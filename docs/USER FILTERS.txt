@@ -1,0 +1,35 @@
+USER FILTERS — RECORD A MAP RECIPE (0.73)
+
+1. Create a blank map, or Generate Images with uniform starting colors. Deselect.
+2. Click Record Filter, enter a name, and Start recording.
+3. Use Mountains / Hills / Mountain landscape, Posterize and other filters,
+   Wand selections, fills, expand/contract, City plots, and Deco generation.
+   Linked painting and the actual chosen values are captured per operation.
+4. Reopen Record Filter and click Stop & save file. Keep the .uofilter download.
+5. Choose your saved filter, choose recorded seeds, master seed, or random seed
+   each run, and Run filter — replace map. The current map size is retained.
+
+Replay starts from the recorded uniform colors and replaces all three planes.
+It stages results before committing. One Undo restores the previous map and
+selection. A failed/cancelled step leaves the previous map and history intact.
+Named selection snapshots remain in your document; the recipe does not edit them.
+
+Files are portable: use Open filter file after opening a different editor session
+or release. The list may persist for the current browser origin, but local launch
+ports differ; the downloaded file is your durable copy. No API key is needed.
+
+Exact-color selections follow the generated colors rather than old pixel masks.
+Contiguous selections pick the nearest matching region to their recorded relative
+location. Match surroundings retains the exact surrounding color rule. If a
+required color or compatible site is absent, the recipe reports the failed step.
+Different seeds do not guarantee every recipe can run: choose broad reusable rules.
+
+First-release scope excludes hand-painted strokes, editable paths/roads, rectangle
+and pixel selections, snapshot operations, imports, AI edits and Undo during
+recording. These unsupported edits are blocked rather than silently omitted.
+Finish previews before stopping/replaying. Discard recording keeps map edits.
+Up to 500 steps; imported filter files are limited to 2 MB. Large individual steps
+can temporarily pause the browser. Cancel takes effect between steps. The normal
+Undo memory limit still applies; oversized replay commits fail without changing
+pixels. Test evidence includes full-Felucca fill replay and exact Undo/Redo,
+small-map mountain/posterize/color selection, city/deco, failure and cancellation.

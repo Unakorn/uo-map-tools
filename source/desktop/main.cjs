@@ -1,0 +1,29 @@
+'use strict';
+const {app,BrowserWindow,Menu,dialog,session}=require('electron');
+const fs=require('node:fs'),path=require('node:path'),{spawn}=require('node:child_process');
+const selfTest=process.argv.find(v=>v.startsWith('--self-test='));
+if(selfTest)app.setPath('userData',path.resolve(selfTest.slice(12),'profile'));
+app.setName('UO Map Tools');let win,bridge;
+if(!app.requestSingleInstanceLock()){app.quit();}else{
+app.on('second-instance',()=>{if(win){win.restore();win.focus();}});
+app.whenReady().then(async()=>{
+ const directory=__dirname,root=path.resolve(directory,'../..'),prefsPath=path.join(app.getPath('userData'),'editor-preferences.json');
+ let prefs={};try{prefs=JSON.parse(fs.readFileSync(prefsPath,'utf8'));}catch{}
+ const restore='<script>try{const p='+JSON.stringify(prefs).replace(/</g,'\\u003c')+';for(const k of Object.keys(p))if(k.startsWith("uo-")&&typeof p[k]==="string")localStorage.setItem(k,p[k]);}catch{}</script>';
+ bridge=await require('./ai-host.cjs').start({directory,htmlTransform:html=>html.replace('</head>',restore+'</head>')});
+ win=new BrowserWindow({width:1500,height:960,minWidth:900,minHeight:650,show:!selfTest,title:'UO Map Tools',backgroundColor:'#172a40',webPreferences:{nodeIntegration:false,contextIsolation:true,sandbox:true,devTools:!!selfTest}});
+ const savePrefs=async()=>{if(!win||win.isDestroyed())return;try{const p=await win.webContents.executeJavaScript('Object.fromEntries(Object.keys(localStorage).filter(k=>k.startsWith("uo-")).map(k=>[k,localStorage.getItem(k)]))');fs.mkdirSync(path.dirname(prefsPath),{recursive:true});fs.writeFileSync(prefsPath,JSON.stringify(p));}catch{}};
+ const timer=setInterval(savePrefs,2000);timer.unref();let closing=false;win.on('close',e=>{if(!closing&&!selfTest){e.preventDefault();savePrefs().finally(()=>{closing=true;if(!win.isDestroyed())win.close();});}});
+ win.webContents.setWindowOpenHandler(()=>({action:'deny'}));win.webContents.on('will-navigate',(e,url)=>{if(url!==bridge.url+'/')e.preventDefault();});
+ win.webContents.on('will-prevent-unload',e=>{if(selfTest){global.closeProtected=true;return;}if(dialog.showMessageBoxSync(win,{type:'warning',buttons:['Keep editing','Discard and close'],defaultId:0,cancelId:0,message:'Unsaved work',detail:'Save your project before closing to keep your map changes.'})===1)e.preventDefault();});
+ const localFilePermission=(wc,permission)=>wc===win.webContents&&permission==='fileSystem'&&wc.getURL()===bridge.url+'/';
+ session.defaultSession.setPermissionCheckHandler((wc,permission)=>localFilePermission(wc,permission));
+ session.defaultSession.setPermissionRequestHandler((wc,permission,callback)=>callback(localFilePermission(wc,permission)));
+ session.defaultSession.on('will-download',(_event,item)=>{if(selfTest)item.setSavePath(path.join(path.resolve(selfTest.slice(12)),item.getFilename()));else item.setSaveDialogOptions({title:'Save UO Map Tools file',defaultPath:path.join(app.getPath('documents'),item.getFilename())});});
+ const builder=()=>{const exe=path.join(root,'Map builder','UO Map Builder.exe');if(!fs.existsSync(exe))return dialog.showErrorBox('Map builder missing','Extract the whole release folder first.');spawn(exe,[],{cwd:path.dirname(exe),detached:true,stdio:'ignore'}).unref();};
+ Menu.setApplicationMenu(Menu.buildFromTemplate([{label:'File',submenu:[{label:'Open map builder',click:builder},{type:'separator'},{role:'quit'}]},{label:'Edit',submenu:[{role:'undo'},{role:'redo'},{type:'separator'},{role:'cut'},{role:'copy'},{role:'paste'},{role:'selectAll'}]},{label:'View',submenu:[{role:'resetZoom'},{role:'zoomIn'},{role:'zoomOut'},{role:'togglefullscreen'}]},{label:'Help',submenu:[{label:'About',click:()=>dialog.showMessageBox(win,{message:'UO Map Tools 1.0.0',detail:'Desktop image editor, seeded terrain generator, and UO map builder. Save editable projects regularly.'})}]}]));
+ await win.loadURL(bridge.url+'/');
+ if(selfTest){const out=path.resolve(selfTest.slice(12));fs.mkdirSync(out,{recursive:true});try{const result=await win.webContents.executeJavaScript(`(async()=>{const d=new MapPaintCore.MapPaintDocument(128,128,UOPalette);d.terrain.fill(12);for(let i=0;i<d.altitude.length;i++)d.altitude[i]=30+i%128;MapPaintApp.replaceDocument(d,'Desktop test');d.createHousingTerraces({min:12,max:24});d.generateDecorations({housingSafe:true,plants:30});const saved=d.saveProject();localStorage.setItem('uo-editor-notes-v1','Desktop persistence <test>');MapPaintApp.dispatch('undo');MapPaintApp.dispatch('redo');return {desktop:typeof require==='undefined',width:d.width,terraces:!!d.createHousingTerraces,plants:d.deco.some(v=>v!==65535),projectBytes:saved.length,filters:document.getElementById('simple-filter').options.length,download:typeof MapPaintApp.downloadMapImages,directoryPicker:typeof showDirectoryPicker,savedBytes:Array.from(saved)};})()`);fs.writeFileSync(path.join(out,'Desktop test.uomapimage'),Buffer.from(result.savedBytes));delete result.savedBytes;await win.webContents.executeJavaScript('MapPaintApp.downloadMapImages()');await new Promise(r=>setTimeout(r,1500));fs.writeFileSync(path.join(out,'smoke.json'),JSON.stringify(result,null,2));fs.writeFileSync(path.join(out,'desktop.png'),(await win.webContents.capturePage()).toPNG());await savePrefs();win.close();await new Promise(r=>setTimeout(r,300));result.closeProtected=global.closeProtected===true&&!win.isDestroyed();fs.writeFileSync(path.join(out,'smoke.json'),JSON.stringify(result,null,2));if(!result.closeProtected)throw Error('Unsaved close protection failed');win.destroy();app.quit();}catch(e){fs.writeFileSync(path.join(out,'error.txt'),e.stack);win.destroy();app.exit(1);}}
+}).catch(e=>{dialog.showErrorBox('UO Map Tools',e.message);app.exit(1);});
+app.on('window-all-closed',()=>app.quit());app.on('will-quit',()=>{if(bridge){bridge.server.closeAllConnections();bridge.server.close();}});
+}
